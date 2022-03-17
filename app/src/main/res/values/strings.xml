@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">JobAppClientside</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="login">Login</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="create_account">Create account</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="search">Search</string>
+    <string name="saved_jobs">Saved jobs</string>
+    <string name="profile">Profile</string>
+    <string name="search_for_any_job">Search for any job</string>
+</resources>

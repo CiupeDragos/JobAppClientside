@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/filter_item_view_background"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/tvFilterText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Timisoara"
+            android:textColor="@color/secondaryGrey"
+            android:layout_marginStart="2dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imgRemoveFilter"
+            android:layout_width="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@id/tvFilterText"
+            app:layout_constraintTop_toTopOf="@id/tvFilterText"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:src="@drawable/ic_remove"
+            app:layout_constraintBottom_toBottomOf="@id/tvFilterText"
+            android:layout_height="wrap_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.JobAppClientside" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryGreen</item>
+        <item name="colorPrimaryVariant">@color/darkPrimaryGreen</item>
+        <item name="colorOnPrimary">@color/secondaryGrey</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryGrey</item>
+        <item name="colorSecondaryVariant">@color/darkSecondaryGrey</item>
+        <item name="colorOnSecondary">@color/primaryGreen</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>
