@@ -20,5 +20,5 @@ interface AbstractRepository {
 
     suspend fun deleteJobFromFavourites(jobID: String, accountUsername: String): Resource<String>
 
-    suspend fun getJobs(jobFilter: JobFilter): Resource<List<JobPost>>
+    suspend fun getJobs(jobFilter: String): Resource<List<JobPost>>
 }

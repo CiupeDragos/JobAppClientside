@@ -1,5 +1,6 @@
 package com.example.jobappclientside.ui.core.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jobappclientside.datamodels.regular.JobFilter
@@ -8,6 +9,7 @@ import com.example.jobappclientside.datamodels.regular.JobPost
 import com.example.jobappclientside.other.AbstractDispatchers
 import com.example.jobappclientside.remote.Resource
 import com.example.jobappclientside.repositories.AbstractRepository
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,7 +53,10 @@ class JobSearchViewModel @Inject constructor(
                 filterList[jobMinSalaryItem].filterValue?.toInt(),
                 filterList[jobLocationItem].filterValue
             )
-            when(val result = repository.getJobs(jobFilter)) {
+            val filterToSend = Gson().toJson(jobFilter)
+            Log.d("Main Activity", "$jobFilter")
+
+            when(val result = repository.getJobs(filterToSend)) {
                 is Resource.Success -> {
                     _jobRequestFlow.emit(JobEvent.JobRequestSuccess(result.data ?: listOf()))
                 }

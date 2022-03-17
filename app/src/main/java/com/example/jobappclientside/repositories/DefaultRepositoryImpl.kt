@@ -44,18 +44,18 @@ class DefaultRepositoryImpl(private val httpApi: HttpApi): AbstractRepository {
         return handleBasicApiResponse { httpApi.deleteJobFromFavourites(favouriteJobRequest) }
     }
 
-    override suspend fun getJobs(jobFilter: JobFilter): Resource<List<JobPost>> {
-        val result = try {
+    override suspend fun getJobs(jobFilter: String): Resource<List<JobPost>> {
+        try {
             val networkCall = httpApi.getJobs(jobFilter)
             if(networkCall.isSuccessful) {
-                Resource.Success(networkCall.body()!!)
+                return Resource.Success(networkCall.body() ?: listOf())
             } else {
-                Resource.Error(networkCall.message())
+               return Resource.Error(networkCall.message())
             }
         } catch (e: Exception) {
-            Resource.Error("An unknown error occurred")
+            e.printStackTrace()
+            return Resource.Error("Repository error")
         }
-        return result
     }
 
 

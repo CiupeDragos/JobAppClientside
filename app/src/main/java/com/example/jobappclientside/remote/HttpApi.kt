@@ -43,6 +43,6 @@ interface HttpApi {
 
     @GET("/getJobPosts")
     suspend fun getJobs(
-        @Body jobFilter: JobFilter
+        @Query("jobFilter") jobFilter: String
     ): Response<List<JobPost>>
 }
