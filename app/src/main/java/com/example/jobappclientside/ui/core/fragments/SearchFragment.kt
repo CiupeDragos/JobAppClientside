@@ -39,12 +39,14 @@ class SearchFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         subscribeToObservers()
+        initFilters()
     }
 
     private fun subscribeToObservers() {
         viewLifecycleOwner.lifecycleScope.launch(viewModel.dispatchersProvider.default) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.searchFiltersFlow.collect { jobFilterList ->
+                    Log.d("MainActivity", "Observed for $jobFilterList")
                     viewModel.requestJobsWithFilters(jobFilterList)
                 }
             }
@@ -76,6 +78,10 @@ class SearchFragment: Fragment() {
             adapter = jobFiltersAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
         }
+    }
+
+    private fun initFilters() {
+        viewModel.initFilters()
     }
 
     override fun onDestroy() {

@@ -11,7 +11,9 @@ import com.example.jobappclientside.remote.Resource
 import com.example.jobappclientside.repositories.AbstractRepository
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,8 +30,8 @@ class JobSearchViewModel @Inject constructor(
         data class JobRequestError(val message: String): JobEvent()
     }
 
-    private val _searchFiltersFlow = MutableStateFlow(initializeFilters())
-    val searchFiltersFlow: StateFlow<List<JobFilterItem>> = _searchFiltersFlow
+    private val _searchFiltersFlow = MutableSharedFlow<List<JobFilterItem>>()
+    val searchFiltersFlow: SharedFlow<List<JobFilterItem>> = _searchFiltersFlow
 
     private val _jobRequestFlow = MutableStateFlow<JobEvent>(JobEvent.JobRequestSuccess(listOf()))
     val jobRequestFlow: StateFlow<JobEvent> = _jobRequestFlow
@@ -68,7 +70,7 @@ class JobSearchViewModel @Inject constructor(
     }
 
     fun removeFilterFromList(filter: JobFilterItem, jobFilterCurList: List<JobFilterItem>) {
-        viewModelScope.launch(dispatchersProvider.default) {
+        viewModelScope.launch(dispatchersProvider.io) {
             val listToModify = jobFilterCurList.toMutableList()
             val indexToModify = jobFilterCurList.indexOfFirst {
                 it.filterName == filter.filterName
@@ -84,5 +86,12 @@ class JobSearchViewModel @Inject constructor(
             JobFilterItem("jobMinSalary", null),
             JobFilterItem("jobLocation", null)
             )
+    }
+
+    fun initFilters() {
+        viewModelScope.launch(dispatchersProvider.io) {
+            _searchFiltersFlow.emit(initializeFilters())
+            Log.d("MainActivity", "Emittttiiiinng")
+        }
     }
 }
