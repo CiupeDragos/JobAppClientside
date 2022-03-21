@@ -1,6 +1,7 @@
 package com.example.jobappclientside.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -17,11 +18,11 @@ class JobFiltersAdapter(private val viewModel: JobSearchViewModel): RecyclerView
 
     private val itemCallback = object: DiffUtil.ItemCallback<JobFilterItem>() {
         override fun areItemsTheSame(oldItem: JobFilterItem, newItem: JobFilterItem): Boolean {
-            return oldItem == newItem
+            return oldItem.filterName  == newItem.filterName
         }
 
         override fun areContentsTheSame(oldItem: JobFilterItem, newItem: JobFilterItem): Boolean {
-            return oldItem == newItem
+            return oldItem.filterValue == newItem.filterValue
         }
     }
 
@@ -44,9 +45,11 @@ class JobFiltersAdapter(private val viewModel: JobSearchViewModel): RecyclerView
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
         val curItem = differ.currentList[position]
         holder.binding.apply {
-            tvFilterText.text = curItem.filterValue
-            onFilterClick?.let { removeFilter ->
-                removeFilter(curItem)
+            tvFilterText.text = curItem?.filterValue
+            imgRemoveFilter.setOnClickListener {
+                onFilterClick?.let { removeFilter ->
+                    removeFilter(curItem)
+                }
             }
         }
     }

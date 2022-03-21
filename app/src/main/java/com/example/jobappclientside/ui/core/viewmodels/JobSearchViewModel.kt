@@ -11,7 +11,10 @@ import com.example.jobappclientside.remote.Resource
 import com.example.jobappclientside.repositories.AbstractRepository
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,19 +23,23 @@ import javax.inject.Inject
 class JobSearchViewModel @Inject constructor(
     val dispatchersProvider: AbstractDispatchers,
     private val repository: AbstractRepository
-): ViewModel() {
+) : ViewModel() {
 
-
-    sealed class JobEvent {
-        data class JobRequestSuccess(val data: List<JobPost>): JobEvent()
-        data class JobRequestError(val message: String): JobEvent()
+    sealed class RequestEvent {
+        data class JobRequestSuccess(val data: List<JobPost>) : RequestEvent()
+        data class JobRequestError(val message: String) : RequestEvent()
+        data class JobSaveSuccess(val data: String): RequestEvent()
+        data class JobSaveError(val message: String): RequestEvent()
+        object JobRequestLoading : RequestEvent()
     }
 
-    private val _searchFiltersFlow = MutableStateFlow(initializeFilters())
+    private val _searchFiltersFlow = MutableStateFlow<List<JobFilterItem>>(listOf(
+        JobFilterItem("jobLocation", "Timisoara")
+    ))
     val searchFiltersFlow: StateFlow<List<JobFilterItem>> = _searchFiltersFlow
 
-    private val _jobRequestFlow = MutableStateFlow<JobEvent>(JobEvent.JobRequestSuccess(listOf()))
-    val jobRequestFlow: StateFlow<JobEvent> = _jobRequestFlow
+    private val _requestFlow = MutableSharedFlow<RequestEvent>()
+    val requestFlow: SharedFlow<RequestEvent> = _requestFlow
 
     fun emitFilters(filterList: List<JobFilterItem>) {
         viewModelScope.launch(dispatchersProvider.default) {
@@ -40,29 +47,35 @@ class JobSearchViewModel @Inject constructor(
         }
     }
 
-    fun requestJobsWithFilters(filterList: List<JobFilterItem>) {
-        viewModelScope.launch(dispatchersProvider.io) {
-            val jobTypeItem = filterList.indexOfFirst { it.filterName == "jobType" }
+    suspend fun requestJobsWithFilters(filterList: List<JobFilterItem>, searchQuery: String, requesterUsername: String) {
 
-            val jobMinSalaryItem = filterList.indexOfFirst { it.filterName == "jobMinSalary" }
+        Log.d("MainActivityDebug", "Request for jobs sent")
 
-            val jobLocationItem = filterList.indexOfFirst { it.filterName == "jobLocation" }
+        _requestFlow.emit(RequestEvent.JobRequestLoading)
 
-            val jobFilter = JobFilter(
-                filterList[jobTypeItem].filterValue,
-                filterList[jobMinSalaryItem].filterValue?.toInt(),
-                filterList[jobLocationItem].filterValue
-            )
-            val filterToSend = Gson().toJson(jobFilter)
-            Log.d("Main Activity", "$jobFilter")
+        val jobTypeItem = filterList.indexOfFirst { it.filterName == "jobType" }
 
-            when(val result = repository.getJobs(filterToSend)) {
-                is Resource.Success -> {
-                    _jobRequestFlow.emit(JobEvent.JobRequestSuccess(result.data ?: listOf()))
-                }
-                is Resource.Error -> {
-                    _jobRequestFlow.emit(JobEvent.JobRequestError(result.message ?: "An unknown error occurred"))
-                }
+        val jobMinSalaryItem = filterList.indexOfFirst { it.filterName == "jobMinSalary" }
+
+        val jobLocationItem = filterList.indexOfFirst { it.filterName == "jobLocation" }
+
+        val jobFilter = JobFilter(
+            if (jobTypeItem != -1) filterList[jobTypeItem].filterValue else null,
+            if (jobMinSalaryItem != -1) filterList[jobMinSalaryItem].filterValue?.toInt() else null,
+            if (jobLocationItem != -1) filterList[jobLocationItem].filterValue else null
+        )
+        val filterToSend = Gson().toJson(jobFilter)
+
+        when (val result = repository.getJobs(filterToSend, searchQuery, requesterUsername)) {
+            is Resource.Success -> {
+                _requestFlow.emit(RequestEvent.JobRequestSuccess(result.data ?: listOf()))
+            }
+            is Resource.Error -> {
+                _requestFlow.emit(
+                    RequestEvent.JobRequestError(
+                        result.message ?: "An unknown error occurred"
+                    )
+                )
             }
         }
     }
@@ -70,19 +83,34 @@ class JobSearchViewModel @Inject constructor(
     fun removeFilterFromList(filter: JobFilterItem, jobFilterCurList: List<JobFilterItem>) {
         viewModelScope.launch(dispatchersProvider.default) {
             val listToModify = jobFilterCurList.toMutableList()
-            val indexToModify = jobFilterCurList.indexOfFirst {
-                it.filterName == filter.filterName
-            }
-            listToModify[indexToModify].filterValue = null
+            listToModify.remove(filter)
             _searchFiltersFlow.emit(listToModify.toList())
         }
     }
 
-    private fun initializeFilters(): List<JobFilterItem> {
-        return listOf(
-            JobFilterItem("jobType", null),
-            JobFilterItem("jobMinSalary", null),
-            JobFilterItem("jobLocation", null)
-            )
+    fun addJobToFavourites(jobId: String, accountUsername: String) {
+        viewModelScope.launch(dispatchersProvider.io) {
+            when(val result = repository.addJobToFavourites(jobId, accountUsername)) {
+                is Resource.Success -> {
+                    _requestFlow.emit(RequestEvent.JobSaveSuccess(result.data ?: "Job saved successfully"))
+                }
+                is Resource.Error -> {
+                    _requestFlow.emit(RequestEvent.JobSaveError(result.message ?: "Unknown error occurred"))
+                }
+            }
+        }
+    }
+
+    fun removeJobFromFavourites(jobID: String, accountUsername: String) {
+        viewModelScope.launch(dispatchersProvider.io) {
+            when(val result = repository.deleteJobFromFavourites(jobID, accountUsername)) {
+                is Resource.Success -> {
+                    _requestFlow.emit(RequestEvent.JobSaveSuccess(result.data ?: "Job removed successfully"))
+                }
+                is Resource.Error -> {
+                    _requestFlow.emit(RequestEvent.JobSaveError(result.message ?: "Unknown error occurred"))
+                }
+            }
+        }
     }
 }

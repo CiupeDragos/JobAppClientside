@@ -8,12 +8,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/lightGray">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/searchLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:elevation="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@color/primaryGreen"
@@ -40,6 +42,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+                    android:id="@+id/etSearchJobs"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:backgroundTint="@android:color/transparent"
@@ -59,14 +62,25 @@
             android:id="@+id/rvJobFilters"
             android:layout_width="match_parent"
             app:layout_constraintTop_toBottomOf="@id/searchLayout"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearchJobs"
             android:layout_width="match_parent"
+            android:padding="8dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rvJobFilters" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="250dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

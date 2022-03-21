@@ -15,5 +15,13 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.jobappclientside.ui.core.fragments.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_createJobFragment"
+            app:destination="@id/createJobFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createJobFragment"
+        android:name="com.example.jobappclientside.ui.core.fragments.CreateJobFragment"
+        android:label="CreateJobFragment" />
 </navigation>
