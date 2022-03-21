@@ -1,12 +1,14 @@
 package com.example.jobappclientside.ui.login.viewmodels
 
 import android.util.Log
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jobappclientside.other.AbstractDispatchers
 import com.example.jobappclientside.other.Constants.MAX_USERNAME_LENGTH
 import com.example.jobappclientside.other.Constants.MIN_PASSWORD_LENGTH
 import com.example.jobappclientside.other.Constants.MIN_USERNAME_LENGTH
+import com.example.jobappclientside.other.DataStoreUtil
 import com.example.jobappclientside.remote.Resource
 import com.example.jobappclientside.repositories.AbstractRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -30,4 +30,9 @@ class DataStoreUtil(private val context: Context) {
 
         return username != null && password != null
     }
+
+    suspend fun getUsername(): String {
+        val preferences = context.myDataStore.data.first()
+        return preferences[USERNAME] ?: ""
+    }
 }

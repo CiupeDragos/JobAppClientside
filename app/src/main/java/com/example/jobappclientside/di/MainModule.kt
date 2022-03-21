@@ -54,8 +54,13 @@ object MainModule {
     fun provideDispatcherProvider(): AbstractDispatchers
         = DispatchersProvider()
 
+
+    @Provides
+    @Singleton
+    fun provideContext(@ApplicationContext context: Context) = context
+
     @Singleton
     @Provides
-    fun provideDataStoreUtil(@ApplicationContext context: Context) =
+    fun provideDataStoreUtil(context: Context) =
         DataStoreUtil(context)
 }

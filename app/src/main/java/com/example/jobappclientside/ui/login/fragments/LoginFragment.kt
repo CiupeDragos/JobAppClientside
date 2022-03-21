@@ -108,7 +108,7 @@ class LoginFragment: Fragment() {
     }
 
     private fun redirectLogin() {
-        lifecycleScope.launch(viewModel.dispatchersProvider.main) {
+        lifecycleScope.launch(viewModel.dispatchersProvider.default) {
             val shouldRedirect = dataStoreUtil.isUserLoggedIn()
             if(shouldRedirect) {
                 navigateToMainActivity()

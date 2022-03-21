@@ -1,10 +1,11 @@
 package com.example.jobappclientside.remote
 
-import com.example.jobappclientside.datamodels.regular.JobFilter
 import com.example.jobappclientside.datamodels.regular.JobPost
 import com.example.jobappclientside.datamodels.requests.AccountRequest
 import com.example.jobappclientside.datamodels.requests.FavouriteJobRequest
 import com.example.jobappclientside.datamodels.responses.BasicApiResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -20,9 +21,11 @@ interface HttpApi {
         @Body accountRequest: AccountRequest
     ): Response<BasicApiResponse>
 
+    @Multipart
     @POST("/createJobPost")
     suspend fun createJobPost(
-        @Body jobPost: JobPost
+        @Part jobLogo: MultipartBody.Part?,
+        @Part("jobPost") jobPost: RequestBody
     ): Response<BasicApiResponse>
 
     @DELETE("/deleteJobPost")
@@ -36,13 +39,20 @@ interface HttpApi {
         @Body favouriteJobRequest: FavouriteJobRequest
     ): Response<BasicApiResponse>
 
-    @DELETE("/deleteJobFromFavourites")
+    @POST("/deleteJobFromFavourites")
     suspend fun deleteJobFromFavourites(
         @Body favouriteJobRequest: FavouriteJobRequest
     ): Response<BasicApiResponse>
 
     @GET("/getJobPosts")
     suspend fun getJobs(
-        @Query("jobFilter") jobFilter: String
+        @Query("jobFilter") jobFilter: String,
+        @Query("searchQuery") searchQuery: String,
+        @Query("requesterUsername") requesterUsername: String
+    ): Response<List<JobPost>>
+
+    @GET("/getSavedJobs")
+    suspend fun getSavedJobs(
+        @Query("accountUsername") accountUsername: String
     ): Response<List<JobPost>>
 }

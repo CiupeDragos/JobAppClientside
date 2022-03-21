@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,6 +10,133 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/primaryGreen"
+            android:elevation="4dp"
+            android:layout_height="48dp" />
+
+        <ImageView
+            android:id="@+id/imgProfileIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/topBar"
+            android:layout_marginStart="4dp"
+            android:elevation="4dp"
+            android:src="@drawable/ic_profile_darker"
+            app:layout_constraintBottom_toBottomOf="@id/topBar"
+            />
+
+        <TextView
+            android:id="@+id/tvAccountUsername"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgProfileIcon"
+            app:layout_constraintTop_toTopOf="@id/imgProfileIcon"
+            app:layout_constraintBottom_toBottomOf="@id/imgProfileIcon"
+            tools:text="bosmania"
+            android:text="bosmania"
+            android:elevation="4dp"
+            android:layout_marginStart="2dp"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryGrey"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imgAccountDetails"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_account_details"
+            android:layout_marginTop="24dp"/>
+
+        <TextView
+            android:id="@+id/tvAccountDetails"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgAccountDetails"
+            app:layout_constraintTop_toTopOf="@id/imgAccountDetails"
+            android:layout_marginStart="4dp"
+            android:text="@string/account_details"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgAccountDetails"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imgCreateJobPost"
+            app:layout_constraintTop_toBottomOf="@id/imgAccountDetails"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_create_job_post"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tvCreateJobPost"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgCreateJobPost"
+            app:layout_constraintTop_toTopOf="@id/imgCreateJobPost"
+            android:layout_marginStart="4dp"
+            android:text="@string/create_a_job_posting"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgCreateJobPost"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imgJobPostings"
+            app:layout_constraintTop_toBottomOf="@id/imgCreateJobPost"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_see_job_posts"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tvJobPostings"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgJobPostings"
+            app:layout_constraintTop_toTopOf="@id/imgJobPostings"
+            android:layout_marginStart="4dp"
+            android:text="@string/my_job_postings"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgJobPostings"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imgJobApplications"
+            app:layout_constraintTop_toBottomOf="@id/imgJobPostings"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_see_job_applications"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tvJobApplications"
+            android:layout_width="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgJobApplications"
+            app:layout_constraintTop_toTopOf="@id/imgJobApplications"
+            android:layout_marginStart="4dp"
+            android:text="@string/my_job_applications"
+            android:textStyle="bold"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgJobApplications"
+            android:layout_height="wrap_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

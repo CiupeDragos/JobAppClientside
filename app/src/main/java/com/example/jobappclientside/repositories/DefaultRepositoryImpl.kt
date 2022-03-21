@@ -1,13 +1,13 @@
 package com.example.jobappclientside.repositories
 
-import android.util.Log
-import com.example.jobappclientside.datamodels.regular.JobFilter
 import com.example.jobappclientside.datamodels.regular.JobPost
 import com.example.jobappclientside.datamodels.requests.AccountRequest
 import com.example.jobappclientside.datamodels.requests.FavouriteJobRequest
 import com.example.jobappclientside.datamodels.responses.BasicApiResponse
 import com.example.jobappclientside.remote.HttpApi
 import com.example.jobappclientside.remote.Resource
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import kotlin.Exception
 
@@ -24,8 +24,8 @@ class DefaultRepositoryImpl(private val httpApi: HttpApi): AbstractRepository {
         return handleBasicApiResponse { httpApi.loginAccount(accountRequest) }
     }
 
-    override suspend fun createJobPost(jobPost: JobPost): Resource<String> {
-        return handleBasicApiResponse { httpApi.createJobPost(jobPost) }
+    override suspend fun createJobPost(jobLogo: MultipartBody.Part?, jobPost: RequestBody): Resource<String> {
+        return handleBasicApiResponse { httpApi.createJobPost(jobLogo, jobPost) }
     }
 
     override suspend fun deleteJobPost(jobID: String, username: String): Resource<String> {
@@ -44,20 +44,29 @@ class DefaultRepositoryImpl(private val httpApi: HttpApi): AbstractRepository {
         return handleBasicApiResponse { httpApi.deleteJobFromFavourites(favouriteJobRequest) }
     }
 
-    override suspend fun getJobs(jobFilter: String): Resource<List<JobPost>> {
-        try {
-            val networkCall = httpApi.getJobs(jobFilter)
+    override suspend fun getJobs(jobFilter: String, searchQuery: String, requesterUsername: String): Resource<List<JobPost>> {
+       return handleGeneralResponse { httpApi.getJobs(jobFilter, searchQuery, requesterUsername) }
+    }
+
+    override suspend fun getSavedJobs(requesterUsername: String): Resource<List<JobPost>> {
+        return handleGeneralResponse { httpApi.getSavedJobs(requesterUsername) }
+    }
+
+    private suspend fun <T> handleGeneralResponse(
+        httpRequest: suspend () -> Response<T>
+    ): Resource<T> {
+        return try {
+            val networkCall = httpRequest()
             if(networkCall.isSuccessful) {
-                return Resource.Success(networkCall.body() ?: listOf())
+                Resource.Success(networkCall.body()!!)
             } else {
-               return Resource.Error(networkCall.message())
+                Resource.Error(networkCall.message())
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            return Resource.Error("Repository error")
+            Resource.Error("An unknown error occurred")
         }
     }
-
 
     private suspend fun handleBasicApiResponse(
         httpRequest: suspend () -> Response<BasicApiResponse>
