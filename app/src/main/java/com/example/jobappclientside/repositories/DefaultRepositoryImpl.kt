@@ -1,6 +1,7 @@
 package com.example.jobappclientside.repositories
 
 import com.example.jobappclientside.datamodels.regular.JobPost
+import com.example.jobappclientside.datamodels.requests.AccountDetailsRequest
 import com.example.jobappclientside.datamodels.requests.AccountRequest
 import com.example.jobappclientside.datamodels.requests.FavouriteJobRequest
 import com.example.jobappclientside.datamodels.responses.BasicApiResponse
@@ -52,6 +53,18 @@ class DefaultRepositoryImpl(private val httpApi: HttpApi): AbstractRepository {
         return handleGeneralResponse { httpApi.getSavedJobs(requesterUsername) }
     }
 
+    override suspend fun getAccountDetails(accountUsername: String): Resource<AccountDetailsRequest> {
+        return handleGeneralResponse { httpApi.getAccountDetails(accountUsername) }
+    }
+
+    override suspend fun updateAccountDetails(profilePic: MultipartBody.Part?, accountDetails: RequestBody): Resource<String> {
+        return handleBasicApiResponse { httpApi.updateAccountDetails(profilePic, accountDetails) }
+    }
+
+    override suspend fun getPostedJobs(accountUsername: String): Resource<List<JobPost>> {
+        return handleGeneralResponse { httpApi.getPostedJobs(accountUsername) }
+    }
+
     private suspend fun <T> handleGeneralResponse(
         httpRequest: suspend () -> Response<T>
     ): Resource<T> {
@@ -71,7 +84,7 @@ class DefaultRepositoryImpl(private val httpApi: HttpApi): AbstractRepository {
     private suspend fun handleBasicApiResponse(
         httpRequest: suspend () -> Response<BasicApiResponse>
     ): Resource<String> {
-        val result = try {
+        return try {
             val networkCall = httpRequest()
             if(networkCall.isSuccessful && networkCall.body()!!.status) {
                 Resource.Success(networkCall.body()!!.message)
@@ -81,8 +94,8 @@ class DefaultRepositoryImpl(private val httpApi: HttpApi): AbstractRepository {
                 Resource.Error(networkCall.message())
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             Resource.Error("An unknown error occurred")
         }
-        return result
     }
 }

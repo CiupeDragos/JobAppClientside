@@ -36,6 +36,7 @@
                 app:layout_constraintStart_toStartOf="@id/tvJobTimestamp"
                 app:layout_constraintTop_toBottomOf="@id/tvJobTimestamp"
                 android:layout_height="70dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/no_job_image"
                 android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="@id/tvJobTimestamp" />
@@ -84,6 +85,17 @@
                 app:layout_constraintBottom_toTopOf="@id/tvJobTitle"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_unselected_favourite" />
+
+            <TextView
+                android:id="@+id/tvJobRemote"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvJobLocation"
+                app:layout_constraintTop_toTopOf="@id/tvJobLocation"
+                android:layout_marginStart="16dp"
+                android:text="@string/on_site"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tvJobLocation"
+                android:layout_height="wrap_content" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

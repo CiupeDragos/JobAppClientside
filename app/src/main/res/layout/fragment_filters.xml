@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/textLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:elevation="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/primaryGreen"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvFragmentText"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:text="@string/filter_your_search"
+                android:layout_height="wrap_content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvJobType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/job_type"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_goneMarginStart="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textLayout" />
+
+        <RadioGroup
+            android:id="@+id/radioGrpType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/tvJobType"
+            app:layout_constraintStart_toEndOf="@id/tvJobType"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/tvJobType">
+
+            <RadioButton
+                android:id="@+id/btnFullTime"
+                android:layout_width="wrap_content"
+                android:text="@string/full_time"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/btnPartTime"
+                android:layout_width="wrap_content"
+                android:text="@string/part_time"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvJobRemote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/remote"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_goneMarginStart="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvJobType" />
+
+        <RadioGroup
+            android:id="@+id/radioGrpRemote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/tvJobRemote"
+            app:layout_constraintStart_toEndOf="@id/tvJobRemote"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/tvJobRemote">
+
+            <RadioButton
+                android:id="@+id/btnYes"
+                android:layout_width="wrap_content"
+                android:text="@string/yes"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/btnNo"
+                android:layout_width="wrap_content"
+                android:text="@string/no"
+                android:layout_height="wrap_content" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvJobLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/location"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_goneMarginStart="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvJobRemote" />
+
+        <EditText
+            android:id="@+id/etJobLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvJobLocation"
+            app:layout_constraintTop_toTopOf="@id/tvJobLocation"
+            android:hint="@string/enter_any_location"
+            android:inputType="text"
+            android:textColorHint="@color/lightSecondaryGrey"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/tvJobLocation" />
+
+        <TextView
+            android:id="@+id/tvJobMinSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/minimum_salary"
+            android:textColor="@color/secondaryGrey"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_goneMarginStart="4dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvJobLocation" />
+
+        <EditText
+            android:id="@+id/etJobMinSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvJobMinSalary"
+            app:layout_constraintTop_toTopOf="@id/tvJobMinSalary"
+            android:hint="@string/enter_any_amount"
+            android:inputType="number"
+            android:textColorHint="@color/lightSecondaryGrey"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/tvJobMinSalary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApply"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/apply_filters"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/tvJobMinSalary" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:background="@color/primaryGreen"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:elevation="2dp"
+                android:layout_height="48dp">
+
+                <TextView
+                    android:id="@+id/tvJobTitleTopBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="2dp"
+                    android:textColor="@color/secondaryGrey"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="4dp"
+                    tools:text="Android Developer Intern" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvJobTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/topBar"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="Position:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobTitleValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvJobTitle"
+                android:paddingStart="4dp"
+                app:layout_constraintTop_toTopOf="@id/tvJobTitle"
+                app:layout_constraintBottom_toBottomOf="@id/tvJobTitle"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                android:gravity="center_vertical"
+                tools:text="Android developer Intern"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobCompany"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobTitle"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="Company:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobCompanyValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvJobCompany"
+                android:paddingStart="4dp"
+                android:gravity="center_vertical"
+                tools:text="Cobalt Sign"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                app:layout_constraintTop_toTopOf="@id/tvJobCompany"
+                app:layout_constraintBottom_toBottomOf="@id/tvJobCompany"
+                android:layout_marginStart="4dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobCompany"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/location"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobLocationValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvJobLocation"
+                android:paddingStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                tools:text="Timisoara"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="@id/tvJobLocation"
+                app:layout_constraintBottom_toBottomOf="@id/tvJobLocation"
+                android:layout_marginStart="4dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobType"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobLocation"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/employment_type"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobTypeValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvJobType"
+                android:paddingStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                tools:text="Full-time"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="@id/tvJobType"
+                app:layout_constraintBottom_toBottomOf="@id/tvJobType"
+                android:layout_marginStart="4dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvRemote"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobType"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="Remote:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobRemoteValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvRemote"
+                android:paddingStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                tools:text="No"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="@id/tvRemote"
+                app:layout_constraintBottom_toBottomOf="@id/tvRemote"
+                android:layout_marginStart="4dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobSalary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRemote"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/salary_yearly"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobSalaryValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvJobSalary"
+                android:paddingStart="4dp"
+                app:layout_constraintTop_toTopOf="@id/tvJobSalary"
+                app:layout_constraintBottom_toBottomOf="@id/tvJobSalary"
+                android:layout_marginStart="4dp"
+                tools:text="$36,000"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobDescription"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobSalary"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/description"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobDescriptionValue"
+                android:layout_width="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="4dp"
+                android:padding="4dp"
+                android:singleLine="false"
+                app:layout_constraintTop_toBottomOf="@id/tvJobDescription"
+                android:background="@drawable/credentials_background"
+                android:layout_marginStart="4dp"
+                android:textColorHint="@color/secondaryGrey"
+                tools:text="This is a dummy description"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                android:minHeight="100dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobRequirements"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobDescriptionValue"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/requirements"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobRequirementsValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/credentials_background"
+                android:minHeight="100dp"
+                android:padding="4dp"
+                android:layout_marginStart="4dp"
+                tools:text="These are some dummy requirements"
+                android:textColor="@color/primaryGreen"
+                android:textColorHint="@color/secondaryGrey"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobRequirements" />
+
+            <TextView
+                android:id="@+id/tvJobBenefits"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobRequirementsValue"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/benefits"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvJobBenefitsValue"
+                android:layout_width="0dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="4dp"
+                app:layout_constraintTop_toBottomOf="@id/tvJobBenefits"
+                android:background="@drawable/credentials_background"
+                android:layout_marginStart="4dp"
+                android:textColorHint="@color/secondaryGrey"
+                android:textColor="@color/primaryGreen"
+                android:textStyle="bold"
+                android:minHeight="100dp"
+                android:layout_height="wrap_content"
+                tools:text="These are some dummy benefits" />
+
+            <TextView
+                android:id="@+id/tvContactDetails"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvJobBenefitsValue"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="4dp"
+                android:text="@string/contact_details2"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewProfilePic"
+                android:layout_width="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvContactDetails"
+                android:layout_marginStart="4dp"
+                app:cardCornerRadius="40dp"
+                android:elevation="0dp"
+                android:layout_marginTop="2dp"
+                android:layout_height="40dp">
+
+                <ImageView
+                    android:id="@+id/imgProfileIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/f0c6d036_ad49_4dd2_b2e9_f1cca6c81f7d" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvJobCreator"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/cardViewProfilePic"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/cardViewProfilePic"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                tools:text="Ciupe Dragos"
+                app:layout_constraintBottom_toBottomOf="@id/cardViewProfilePic"/>
+
+            <TextView
+                android:id="@+id/tvCreatorEmail"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cardViewProfilePic"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:text="@string/email" />
+
+            <TextView
+                android:id="@+id/tvCreatorEmailValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvCreatorEmail"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/tvCreatorEmail"
+                app:layout_constraintBottom_toBottomOf="@id/tvCreatorEmail"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                tools:text="ciupedragos8@gmail.com" />
+
+            <TextView
+                android:id="@+id/tvCreatorPhone"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvCreatorEmail"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/secondaryGrey"
+                android:text="@string/phone" />
+
+            <TextView
+                android:id="@+id/tvCreatorPhoneValue"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tvCreatorPhone"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/tvCreatorPhone"
+                app:layout_constraintBottom_toBottomOf="@id/tvCreatorPhone"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryGreen"
+                tools:text="0736944352" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                android:layout_marginBottom="400dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDeleteJob"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="@color/deleteRed"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/tvForConstraint"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/white"
+                android:text="@string/delete_job"
+                app:layout_constraintTop_toBottomOf="@id/tvCreatorPhone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditJob"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/edit_job"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="@color/lightSecondaryGrey"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvForConstraint"
+                app:layout_constraintTop_toBottomOf="@id/tvCreatorPhone" />
+
+            <TextView
+                android:id="@+id/tvForConstraint"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

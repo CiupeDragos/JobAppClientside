@@ -33,9 +33,7 @@ class JobSearchViewModel @Inject constructor(
         object JobRequestLoading : RequestEvent()
     }
 
-    private val _searchFiltersFlow = MutableStateFlow<List<JobFilterItem>>(listOf(
-        JobFilterItem("jobLocation", "Timisoara")
-    ))
+    private val _searchFiltersFlow = MutableStateFlow<List<JobFilterItem>>(listOf())
     val searchFiltersFlow: StateFlow<List<JobFilterItem>> = _searchFiltersFlow
 
     private val _requestFlow = MutableSharedFlow<RequestEvent>()
@@ -54,15 +52,15 @@ class JobSearchViewModel @Inject constructor(
         _requestFlow.emit(RequestEvent.JobRequestLoading)
 
         val jobTypeItem = filterList.indexOfFirst { it.filterName == "jobType" }
-
         val jobMinSalaryItem = filterList.indexOfFirst { it.filterName == "jobMinSalary" }
-
         val jobLocationItem = filterList.indexOfFirst { it.filterName == "jobLocation" }
+        val jobRemoteItem = filterList.indexOfFirst { it.filterName == "jobRemote" }
 
         val jobFilter = JobFilter(
             if (jobTypeItem != -1) filterList[jobTypeItem].filterValue else null,
-            if (jobMinSalaryItem != -1) filterList[jobMinSalaryItem].filterValue?.toInt() else null,
-            if (jobLocationItem != -1) filterList[jobLocationItem].filterValue else null
+            if (jobMinSalaryItem != -1) filterList[jobMinSalaryItem].filterValue.toInt() else null,
+            if (jobLocationItem != -1) filterList[jobLocationItem].filterValue else null,
+            if(jobRemoteItem != -1) filterList[jobRemoteItem].filterValue else null
         )
         val filterToSend = Gson().toJson(jobFilter)
 

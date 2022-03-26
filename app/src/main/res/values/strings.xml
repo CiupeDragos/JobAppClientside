@@ -20,7 +20,6 @@
     <string name="enter_the_company_name">Enter the company name</string>
     <string name="location">Location:</string>
     <string name="employment_type">Employment type:</string>
-    <string name="full_time">Full-time</string>
     <string name="part_time">Part-time</string>
     <string name="salary_yearly">Salary(yearly):</string>
     <string name="description">Description:</string>
@@ -34,4 +33,25 @@
     <string name="logo_image">Logo image:</string>
     <string name="pick">PICK</string>
     <string name="create_job_posting">Create job posting</string>
+    <string name="filter_your_search">Filter your search</string>
+    <string name="job_type">Job type:</string>
+    <string name="full_time">Full-time</string>
+    <string name="remote">Remote:</string>
+    <string name="enter_any_location">Enter any location</string>
+    <string name="minimum_salary">Minimum salary:</string>
+    <string name="enter_any_amount">Enter any amount</string>
+    <string name="apply_filters">Apply filters</string>
+    <string name="on_site">(On-site)</string>
+    <string name="logout">Logout</string>
+    <string name="personal_details">Personal details</string>
+    <string name="email">Email:</string>
+    <string name="phone_number">Phone number:</string>
+    <string name="name">Name:</string>
+    <string name="apply_changes">Apply changes</string>
+    <string name="contact_details">Contact details</string>
+    <string name="contact_details2">Contact details:</string>
+    <string name="phone">Phone:</string>
+    <string name="delete_job">Delete job</string>
+    <string name="edit_job">Edit job</string>
+    <string name="profile_image">Profile Image:</string>
 </resources>

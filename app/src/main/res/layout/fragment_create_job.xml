@@ -148,11 +148,13 @@
                 app:layout_constraintBottom_toBottomOf="@id/tvJobType">
 
                 <RadioButton
+                    android:id="@+id/btnFullTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/full_time" />
 
                 <RadioButton
+                    android:id="@+id/btnPartTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/part_time" />
@@ -169,11 +171,13 @@
                 app:layout_constraintBottom_toBottomOf="@id/tvRemote">
 
                 <RadioButton
+                    android:id="@+id/btnYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/yes" />
 
                 <RadioButton
+                    android:id="@+id/btnNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/no" />
@@ -336,6 +340,16 @@
                 android:layout_marginEnd="4dp"
                 android:layout_marginTop="32dp"
                 android:text="@string/create_job_posting" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                android:layout_marginBottom="400dp"
+                app:layout_constraintStart_toStartOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

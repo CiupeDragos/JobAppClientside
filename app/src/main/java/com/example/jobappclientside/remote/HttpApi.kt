@@ -1,6 +1,7 @@
 package com.example.jobappclientside.remote
 
 import com.example.jobappclientside.datamodels.regular.JobPost
+import com.example.jobappclientside.datamodels.requests.AccountDetailsRequest
 import com.example.jobappclientside.datamodels.requests.AccountRequest
 import com.example.jobappclientside.datamodels.requests.FavouriteJobRequest
 import com.example.jobappclientside.datamodels.responses.BasicApiResponse
@@ -28,7 +29,7 @@ interface HttpApi {
         @Part("jobPost") jobPost: RequestBody
     ): Response<BasicApiResponse>
 
-    @DELETE("/deleteJobPost")
+    @POST("/deleteJobPost")
     suspend fun deleteJobPost(
         @Query("jobID") jobID: String,
         @Query("username") username: String
@@ -53,6 +54,23 @@ interface HttpApi {
 
     @GET("/getSavedJobs")
     suspend fun getSavedJobs(
+        @Query("accountUsername") accountUsername: String
+    ): Response<List<JobPost>>
+
+    @GET("/getAccountDetails")
+    suspend fun getAccountDetails(
+        @Query("username") accountUsername: String
+    ): Response<AccountDetailsRequest>
+
+    @Multipart
+    @POST("/updateAccountDetails")
+    suspend fun updateAccountDetails(
+        @Part profilePic: MultipartBody.Part?,
+        @Part("accountDetails") accountDetails: RequestBody
+    ): Response<BasicApiResponse>
+
+    @GET("/getPostedJobs")
+    suspend fun getPostedJobs(
         @Query("accountUsername") accountUsername: String
     ): Response<List<JobPost>>
 }

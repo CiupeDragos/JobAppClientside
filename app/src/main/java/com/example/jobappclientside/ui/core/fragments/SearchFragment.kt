@@ -11,8 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jobappclientside.R
 import com.example.jobappclientside.databinding.FragmentSearchBinding
 import com.example.jobappclientside.datamodels.regular.JobPost
 import com.example.jobappclientside.other.DataStoreUtil
@@ -62,6 +65,10 @@ class SearchFragment: Fragment() {
         setupRecyclerViews()
         subscribeToObservers()
         setSearchTextListener()
+
+        binding.imgApplyFilters.setOnClickListener {
+            navigateToFiltersFragment()
+        }
     }
 
     private fun subscribeToObservers() {
@@ -84,7 +91,7 @@ class SearchFragment: Fragment() {
                 viewModel.requestFlow.collect { requestEvent ->
                     when(requestEvent) {
                         is JobSearchViewModel.RequestEvent.JobRequestSuccess -> {
-                            jobPostsAdapter.differ.submitList(requestEvent.data)
+                            submitJobs(requestEvent.data)
                             toggleProgressBar(false)
                             Log.d("MainActivityDebug", "JobResult flow observed for success")
                         }
@@ -109,21 +116,79 @@ class SearchFragment: Fragment() {
         }
     }
 
+    private fun submitJobs(jobList: List<JobPost>) {
+        if(jobList.isNotEmpty()) {
+            jobPostsAdapter.differ.submitList(jobList)
+            binding.tvNoJobsAvailable.visibility = View.GONE
+        } else {
+            binding.tvNoJobsAvailable.visibility = View.VISIBLE
+        }
+    }
+
     private fun setupRecyclerViews() {
-        jobFiltersAdapter = JobFiltersAdapter(viewModel)
+        setupFilersRecyclerView()
+        setupJobsRecyclerView()
+    }
+
+    private fun toggleProgressBar(state: Boolean) {
+        when(state) {
+            true -> {
+                binding.progressBar.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+    }
+
+
+    private fun setSearchTextListener() {
+        binding.etSearchJobs.addTextChangedListener {
+            if(!firstTimeOpen) {
+                val searchText = it?.toString() ?: ""
+                searchJob?.cancel()
+                binding.tvNoJobsAvailable.visibility = View.GONE
+                searchJob = viewLifecycleOwner.lifecycleScope.launch(viewModel.dispatchersProvider.io) {
+                    delay(500L)
+                    viewModel.requestJobsWithFilters(
+                        jobFiltersAdapter.differ.currentList,
+                        searchText,
+                        curLoggedInUsername
+                    )
+                }
+            } else {
+                firstTimeOpen = false
+            }
+        }
+    }
+
+    private fun getLoggedInUsername() {
+        viewLifecycleOwner.lifecycleScope.launch(viewModel.dispatchersProvider.default) {
+            curLoggedInUsername = dataStoreUtil.getUsername()
+        }
+    }
+
+    private fun navigateToFiltersFragment() {
+        findNavController().navigate(R.id.action_searchFragment_to_filtersFragment, null, null)
+    }
+
+    private fun setOnFilterClick() {
         jobFiltersAdapter.setOnFilterClick { jobFilterItem ->
             viewModel.removeFilterFromList(jobFilterItem, jobFiltersAdapter.differ.currentList)
         }
+    }
+
+    private fun setupFilersRecyclerView() {
+        jobFiltersAdapter = JobFiltersAdapter(viewModel)
+        setOnFilterClick()
+
         binding.rvJobFilters.apply {
             adapter = jobFiltersAdapter
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                RecyclerView.HORIZONTAL,
-                false
-            )
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         }
+    }
 
-        jobPostsAdapter = JobPostsAdapter()
+    private fun setOnJobSaveClick() {
         jobPostsAdapter.setOnJobSaveClickListener { jobPost ->
 
             val curList = jobPostsAdapter.differ.currentList
@@ -145,46 +210,26 @@ class SearchFragment: Fragment() {
             //Async list differ not updating list ? :(((
             jobPostsAdapter.notifyDataSetChanged()
         }
+    }
+
+    private fun setOnJobClick() {
+        jobPostsAdapter.setOnJobClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("jobPost", it)
+                putSerializable("username", curLoggedInUsername)
+            }
+            findNavController().navigate(R.id.action_searchFragment_to_individualJobFragment, bundle)
+        }
+    }
+
+    private fun setupJobsRecyclerView() {
+        jobPostsAdapter = JobPostsAdapter("")
+        setOnJobSaveClick()
+        setOnJobClick()
+
         binding.rvSearchJobs.apply {
             adapter = jobPostsAdapter
             layoutManager = LinearLayoutManager(requireContext())
-        }
-    }
-
-    private fun toggleProgressBar(state: Boolean) {
-        when(state) {
-            true -> {
-                binding.progressBar.visibility = View.VISIBLE
-            }
-            false -> {
-                binding.progressBar.visibility = View.GONE
-            }
-        }
-    }
-
-
-    private fun setSearchTextListener() {
-        binding.etSearchJobs.addTextChangedListener {
-            if(!firstTimeOpen) {
-                val searchText = it?.toString() ?: ""
-                searchJob?.cancel()
-                searchJob = viewLifecycleOwner.lifecycleScope.launch(viewModel.dispatchersProvider.io) {
-                    delay(500L)
-                    viewModel.requestJobsWithFilters(
-                        jobFiltersAdapter.differ.currentList,
-                        searchText,
-                        curLoggedInUsername
-                    )
-                }
-            } else {
-                firstTimeOpen = false
-            }
-        }
-    }
-
-    private fun getLoggedInUsername() {
-        viewLifecycleOwner.lifecycleScope.launch(viewModel.dispatchersProvider.default) {
-            curLoggedInUsername = dataStoreUtil.getUsername()
         }
     }
 

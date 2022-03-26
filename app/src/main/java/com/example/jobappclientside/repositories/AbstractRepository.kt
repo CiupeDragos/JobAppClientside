@@ -1,12 +1,9 @@
 package com.example.jobappclientside.repositories
 
-import com.example.jobappclientside.datamodels.regular.JobFilter
 import com.example.jobappclientside.datamodels.regular.JobPost
-import com.example.jobappclientside.datamodels.requests.AccountRequest
-import com.example.jobappclientside.datamodels.requests.FavouriteJobRequest
+import com.example.jobappclientside.datamodels.requests.AccountDetailsRequest
 import com.example.jobappclientside.remote.Resource
 import okhttp3.MultipartBody
-import okhttp3.MultipartReader
 import okhttp3.RequestBody
 
 interface AbstractRepository {
@@ -26,4 +23,10 @@ interface AbstractRepository {
     suspend fun getJobs(jobFilter: String, searchQuery: String, requesterUsername: String): Resource<List<JobPost>>
 
     suspend fun getSavedJobs(requesterUsername: String): Resource<List<JobPost>>
+
+    suspend fun getAccountDetails(accountUsername: String): Resource<AccountDetailsRequest>
+
+    suspend fun updateAccountDetails(profilePic: MultipartBody.Part?, accountDetails: RequestBody): Resource<String>
+
+    suspend fun getPostedJobs(accountUsername: String): Resource<List<JobPost>>
 }

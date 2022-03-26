@@ -13,15 +13,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 import com.example.jobappclientside.R
 import com.example.jobappclientside.databinding.FragmentCreateJobBinding
+import com.example.jobappclientside.datamodels.regular.JobPost
+import com.example.jobappclientside.other.Constants.BASE_URL
 import com.example.jobappclientside.other.DataStoreUtil
 import com.example.jobappclientside.other.snackbar
 import com.example.jobappclientside.ui.core.viewmodels.CreateJobViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,7 +40,10 @@ class CreateJobFragment: Fragment() {
     private lateinit var loadContract: ActivityResultLauncher<String>
 
     private val viewModel: CreateJobViewModel by viewModels()
+    private val navArgs: CreateJobFragmentArgs by navArgs()
+
     private var curLogoUri: Uri? = null
+    private var firstTrigger = true
 
     @Inject
     lateinit var dataStoreUtil: DataStoreUtil
@@ -57,6 +67,7 @@ class CreateJobFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
         getLoggedInUsername()
+        checkIfItsOpenedForEdit()
         toggleBottomNav(false)
 
         binding.btnPickImage.setOnClickListener {
@@ -66,17 +77,20 @@ class CreateJobFragment: Fragment() {
         binding.btnCreateJobPost.setOnClickListener {
 
             viewModel.createJobPost(
+                navArgs.jobPost?.jobID,
                 curLoggedInUsername,
                 binding.etJobTitle.text.toString(),
                 binding.etJobCompany.text.toString(),
                 binding.etJobLocation.text.toString(),
                 getJobType(),
                 getJobRemote(),
-                10,
+                getJobSalary(),
                 binding.etJobDescription.text.toString(),
                 binding.etJobRequirements.text.toString(),
                 binding.etJobBenefits.text.toString(),
-                curLogoUri
+                curLogoUri,
+                navArgs.jobPost?.jobImageUrl,
+                navArgs.jobPost?.jobTimestamp
             )
         }
     }
@@ -112,14 +126,17 @@ class CreateJobFragment: Fragment() {
                 viewModel.jobEventFlow.collect { jobEvent ->
                     when(jobEvent) {
                         is CreateJobViewModel.CreateJobEvent.CreateJobSuccess -> {
-                            snackbar(jobEvent.message)
-                            //navigate to profile fragment again
+                            toggleProgressBar(false)
+                            if(navArgs.jobPost != null ) snackbar("Job edited successfully")
+                            else snackbar("Job uploaded successfully")
+                            navigateBack(jobEvent.uploadedJobPost)
                         }
                         is CreateJobViewModel.CreateJobEvent.CreateJobError -> {
+                            toggleProgressBar(false)
                             snackbar(jobEvent.message)
                         }
                         is CreateJobViewModel.CreateJobEvent.CreateJobLoading -> {
-                            //toggle progress bar
+                            toggleProgressBar(true)
                         }
                     }
                 }
@@ -141,20 +158,97 @@ class CreateJobFragment: Fragment() {
         return ""
     }
 
-    private fun getJobRemote(): Boolean? {
+    private fun getJobRemote(): String {
         val selectBtnIDJobRemote = binding.radioGrpRemote.checkedRadioButtonId
 
         if(selectBtnIDJobRemote != - 1) {
-            when(binding.root.findViewById<RadioButton>(selectBtnIDJobRemote).text.toString()) {
-                "Yes" -> {
-                    return true
-                }
-                "No" -> {
-                    return false
-                }
+            return binding.root.findViewById<RadioButton>(selectBtnIDJobRemote).text.toString()
+        }
+        return ""
+    }
+
+    private fun toggleProgressBar(state: Boolean) {
+        when(state) {
+            false -> {
+                binding.progressBar.visibility = View.GONE
+            }
+            true -> {
+                binding.progressBar.visibility = View.VISIBLE
             }
         }
-        return null
+    }
+
+    private fun getJobSalary(): Int {
+        val salaryString = binding.etJobSalary.text.toString()
+        return if(salaryString.isNotEmpty()) salaryString.toInt() else -1
+    }
+
+    private fun navigateBack(modifiedJobPost: JobPost) {
+        if(navArgs.jobPost != null) {
+            //came to edit from job details screen
+            val bundle = Bundle().apply {
+                putSerializable("jobPost", modifiedJobPost)
+                putSerializable("username", modifiedJobPost.jobCreatorUsername)
+            }
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.individualJobFragment, true)
+                .build()
+            findNavController().navigate(R.id.action_createJobFragment_to_individualJobFragment, bundle, navOptions)
+        } else {
+            //came to create job from profile screen
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.profileFragment, true)
+                .build()
+            findNavController().navigate(R.id.action_createJobFragment_to_profileFragment, null, navOptions = navOptions)
+        }
+    }
+
+    private fun checkIfItsOpenedForEdit() {
+        navArgs.jobPost?.let { jobToEdit ->
+            binding.apply {
+                etJobTitle.setText(jobToEdit.jobTitle)
+                etJobCompany.setText(jobToEdit.jobCompany)
+                etJobLocation.setText(jobToEdit.jobLocation)
+                etJobSalary.setText(jobToEdit.jobSalary.toString())
+                etJobDescription.setText(jobToEdit.jobDescription)
+                etJobRequirements.setText(jobToEdit.jobRequirements)
+                etJobBenefits.setText(jobToEdit.jobBenefits)
+
+                if(jobToEdit.jobImageUrl.isNotEmpty() && firstTrigger) {
+                    Glide.with(this@CreateJobFragment)
+                        .load(BASE_URL + jobToEdit.jobImageUrl)
+                        .signature(ObjectKey(UUID.randomUUID()))
+                        .into(binding.imgJobLogo)
+                    firstTrigger = false
+                }
+                getSelectedType(jobToEdit.jobType)
+                getSelectedRemote(jobToEdit.jobRemote)
+
+                binding.btnCreateJobPost.text = "Save changes"
+            }
+        }
+    }
+
+    private fun getSelectedType(jobType: String) {
+        when(jobType) {
+            "Full-time" -> {
+                binding.btnFullTime.isChecked = true
+            }
+            "Part-time" -> {
+                binding.btnPartTime.isChecked = true
+            }
+        }
+    }
+
+    private fun getSelectedRemote(jobRemote: String) {
+        when(jobRemote) {
+            "Yes" -> {
+                binding.btnYes.isChecked = true
+            }
+            "No" -> {
+                binding.btnNo.isChecked = true
+            }
+        }
     }
 
     override fun onDestroy() {

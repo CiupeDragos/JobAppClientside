@@ -8,14 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primaryGreen">#76ff03</color>
-    <color name="lightPrimaryGreen">#b0ff57</color>
-    <color name="darkPrimaryGreen">#32cb00</color>
-    <color name="secondaryGrey">#424242</color>
+    <color name="primaryGreen">#5bb462</color>
+    <color name="lightPrimaryGreen">#7cc381</color>
+    <color name="darkPrimaryGreen">#49904e</color>
+    <color name="secondaryGrey">#394141</color>
     <color name="lightSecondaryGrey">#6d6d6d</color>
     <color name="darkSecondaryGrey">#1b1b1b</color>
     <color name="lightGray">#f5f5f5</color>
     <color name="deleteRed">#6e0110</color>
     <color name="selectedGreen">#007a0a</color>
     <color name="favouritesRed">#f71111</color>
+
+    //#76ff03
+    //#424242
 </resources>

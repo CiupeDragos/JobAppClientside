@@ -5,13 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 import com.example.jobappclientside.R
 import com.example.jobappclientside.databinding.JobPostItemViewBinding
 import com.example.jobappclientside.datamodels.regular.JobPost
+import com.example.jobappclientside.other.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FavouritesAdapter():
+class FavouritesAdapter:
     RecyclerView.Adapter<FavouritesAdapter.JobPostViewHolder>() {
 
     class JobPostViewHolder(val binding: JobPostItemViewBinding): RecyclerView.ViewHolder(binding.root)
@@ -51,9 +54,26 @@ class FavouritesAdapter():
             tvJobLocation.text = curJob.jobLocation
             imgSaveJob.setImageResource(R.drawable.ic_delete_save_job)
 
+            if(curJob.jobRemote == "Yes") {
+                tvJobRemote.text = "(Remote)"
+            }
+
+            if(curJob.jobImageUrl.isNotEmpty()) {
+                Glide.with(this.root)
+                    .load(Constants.BASE_URL + curJob.jobImageUrl)
+                    .signature(ObjectKey(UUID.randomUUID()))
+                    .into(imgJobLogo)
+            }
+
             imgSaveJob.setOnClickListener {
                 onJobDeleteClick?.let { saveJob ->
                     saveJob(curJob)
+                }
+            }
+
+            root.setOnClickListener {
+                onJobClick?.let { openJob ->
+                    openJob(curJob)
                 }
             }
         }
@@ -75,7 +95,12 @@ class FavouritesAdapter():
         onJobDeleteClick = listener
     }
 
+    fun setOnJobClickListener(listener: (JobPost) -> Unit) {
+        onJobClick = listener
+    }
+
     private var onJobDeleteClick: ((JobPost) -> Unit)? = null
 
+    private var onJobClick: ((JobPost) -> Unit)? = null
 
 }

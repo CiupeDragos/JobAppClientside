@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.jobappclientside.R
 import com.example.jobappclientside.databinding.FragmentFavouritesBinding
 import com.example.jobappclientside.datamodels.regular.JobPost
 import com.example.jobappclientside.other.DataStoreUtil
@@ -67,7 +69,7 @@ class FavouritesFragment: Fragment() {
                         }
                         is FavouritesViewModel.FavouriteJobsEvent.FavouriteJobsSuccess -> {
                             toggleProgressBar(false)
-                            favouritesAdapter.differ.submitList(event.data)
+                            submitJobs(event.data)
                         }
                         is FavouritesViewModel.FavouriteJobsEvent.FavouriteJobsError -> {
                             toggleProgressBar(false)
@@ -83,8 +85,8 @@ class FavouritesFragment: Fragment() {
                 viewModel.jobAction.collect { jobAction ->
                     when(jobAction) {
                         is FavouritesViewModel.FavouriteJobsAction.DeleteSuccess -> {
-                            favouritesAdapter.differ.submitList(jobAction.data)
                             snackbar("Job deleted successfully")
+                            submitModifiedJobs(jobAction.data)
                         }
                         is FavouritesViewModel.FavouriteJobsAction.DeleteError -> {
                             snackbar(jobAction.message)
@@ -92,6 +94,19 @@ class FavouritesFragment: Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun submitModifiedJobs(jobList: List<JobPost>) {
+        favouritesAdapter.differ.submitList(jobList)
+        jobList.ifEmpty { binding.tvNoJobsAvailable.visibility = View.VISIBLE }
+    }
+
+    private fun submitJobs(jobList: List<JobPost>) {
+        if(jobList.isNotEmpty()) {
+            favouritesAdapter.differ.submitList(jobList)
+        } else {
+            binding.tvNoJobsAvailable.visibility = View.VISIBLE
         }
     }
 
@@ -103,6 +118,15 @@ class FavouritesFragment: Fragment() {
                 curLoggedInUsername,
                 favouritesAdapter.differ.currentList
             )
+        }
+
+        favouritesAdapter.setOnJobClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("jobPost", it)
+                putSerializable("username", curLoggedInUsername)
+            }
+
+            findNavController().navigate(R.id.action_favouritesFragment_to_individualJobFragment, bundle)
         }
 
         binding.rvFavourites.apply {

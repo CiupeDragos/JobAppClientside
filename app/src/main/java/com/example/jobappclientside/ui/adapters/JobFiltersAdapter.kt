@@ -10,6 +10,9 @@ import com.example.jobappclientside.databinding.FilterItemViewBinding
 import com.example.jobappclientside.datamodels.regular.JobFilter
 import com.example.jobappclientside.datamodels.regular.JobFilterItem
 import com.example.jobappclientside.ui.core.viewmodels.JobSearchViewModel
+import java.lang.NumberFormatException
+import java.text.NumberFormat
+import java.util.*
 
 class JobFiltersAdapter(private val viewModel: JobSearchViewModel): RecyclerView.Adapter<JobFiltersAdapter.FilterViewHolder>() {
 
@@ -45,7 +48,26 @@ class JobFiltersAdapter(private val viewModel: JobSearchViewModel): RecyclerView
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
         val curItem = differ.currentList[position]
         holder.binding.apply {
-            tvFilterText.text = curItem?.filterValue
+
+            when(curItem.filterName) {
+                "jobMinSalary" -> {
+                    val numberFormat = NumberFormat.getCurrencyInstance()
+                    numberFormat.maximumFractionDigits = 0
+                    val convertedFormat = numberFormat.format(curItem.filterValue.toInt())
+                    tvFilterText.text = convertedFormat
+                }
+                "jobRemote" -> {
+                    if(curItem.filterValue == "Yes") {
+                        tvFilterText.text = "Remote"
+                    } else {
+                        tvFilterText.text = "On-site"
+                    }
+                }
+                else -> {
+                    tvFilterText.text = curItem.filterValue
+                }
+            }
+
             imgRemoveFilter.setOnClickListener {
                 onFilterClick?.let { removeFilter ->
                     removeFilter(curItem)

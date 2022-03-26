@@ -29,8 +29,7 @@
             android:layout_marginStart="4dp"
             android:elevation="4dp"
             android:src="@drawable/ic_profile_darker"
-            app:layout_constraintBottom_toBottomOf="@id/topBar"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/topBar" />
 
         <TextView
             android:id="@+id/tvAccountUsername"
@@ -122,16 +121,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:src="@drawable/ic_see_job_applications"
+            android:src="@drawable/ic_logout"
             android:layout_marginTop="12dp"/>
 
         <TextView
-            android:id="@+id/tvJobApplications"
+            android:id="@+id/tvLogout"
             android:layout_width="wrap_content"
             app:layout_constraintStart_toEndOf="@id/imgJobApplications"
             app:layout_constraintTop_toTopOf="@id/imgJobApplications"
             android:layout_marginStart="4dp"
-            android:text="@string/my_job_applications"
+            android:text="@string/logout"
             android:textStyle="bold"
             android:textColor="@color/secondaryGrey"
             android:textSize="20sp"

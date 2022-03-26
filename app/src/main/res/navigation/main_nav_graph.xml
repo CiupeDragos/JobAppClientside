@@ -7,11 +7,22 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.jobappclientside.ui.core.fragments.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_filtersFragment"
+            app:destination="@id/filtersFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_individualJobFragment"
+            app:destination="@id/individualJobFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
         android:name="com.example.jobappclientside.ui.core.fragments.FavouritesFragment"
-        android:label="FavouritesFragment" />
+        android:label="FavouritesFragment" >
+        <action
+            android:id="@+id/action_favouritesFragment_to_individualJobFragment"
+            app:destination="@id/individualJobFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.jobappclientside.ui.core.fragments.ProfileFragment"
@@ -19,9 +30,65 @@
         <action
             android:id="@+id/action_profileFragment_to_createJobFragment"
             app:destination="@id/createJobFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_postedJobsFragment"
+            app:destination="@id/postedJobsFragment" />
     </fragment>
     <fragment
         android:id="@+id/createJobFragment"
         android:name="com.example.jobappclientside.ui.core.fragments.CreateJobFragment"
-        android:label="CreateJobFragment" />
+        android:label="CreateJobFragment" >
+        <action
+            android:id="@+id/action_createJobFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <argument
+            android:name="jobPost"
+            app:argType="com.example.jobappclientside.datamodels.regular.JobPost"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_createJobFragment_to_individualJobFragment"
+            app:destination="@id/individualJobFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filtersFragment"
+        android:name="com.example.jobappclientside.ui.core.fragments.FiltersFragment"
+        android:label="FiltersFragment" >
+        <action
+            android:id="@+id/action_filtersFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.jobappclientside.ui.core.fragments.DetailsFragment"
+        android:label="DetailsFragment" >
+        <action
+            android:id="@+id/action_detailsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postedJobsFragment"
+        android:name="com.example.jobappclientside.ui.core.fragments.PostedJobsFragment"
+        android:label="PostedJobsFragment" >
+        <action
+            android:id="@+id/action_postedJobsFragment_to_individualJobFragment"
+            app:destination="@id/individualJobFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/individualJobFragment"
+        android:name="com.example.jobappclientside.ui.core.fragments.IndividualJobFragment"
+        android:label="IndividualJobFragment" >
+        <argument
+            android:name="jobPost"
+            app:argType="com.example.jobappclientside.datamodels.regular.JobPost" />
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_individualJobFragment_to_createJobFragment"
+            app:destination="@id/createJobFragment" />
+    </fragment>
 </navigation>

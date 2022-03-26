@@ -31,7 +31,7 @@ class CreateJobViewModel @Inject constructor(
 ): ViewModel() {
 
     sealed class CreateJobEvent {
-        data class CreateJobSuccess(val message: String): CreateJobEvent()
+        data class CreateJobSuccess(val uploadedJobPost: JobPost): CreateJobEvent()
         data class CreateJobError(val message: String): CreateJobEvent()
         object CreateJobLoading: CreateJobEvent()
     }
@@ -40,24 +40,27 @@ class CreateJobViewModel @Inject constructor(
     val jobEventFlow: SharedFlow<CreateJobEvent> = _jobEventFlow
 
     fun createJobPost(
+        jobID: String?,
         jobCreator: String,
         jobTitle: String,
         jobCompany: String,
         jobLocation: String,
         jobType: String,
-        jobRemote: Boolean?,
+        jobRemote: String,
         jobSalary: Int,
         jobDesc: String,
         jobReq: String,
         jobBenefits: String,
-        jobLogoUri: Uri?
+        jobLogoUri: Uri?,
+        jobImageUrl: String?,
+        jobTimestamp: Long?
     ) {
 
         viewModelScope.launch(dispatchersProvider.io){
 
             if(
                 jobTitle.isEmpty() || jobCompany.isEmpty() || jobLocation.isEmpty() || jobType.isEmpty()
-                || jobRemote == null || jobSalary == -1 || jobDesc.isEmpty() || jobReq.isEmpty()
+                || jobRemote.isEmpty() || jobSalary == -1 || jobDesc.isEmpty() || jobReq.isEmpty()
                 || jobBenefits.isEmpty()
             ) {
                     _jobEventFlow.emit(CreateJobEvent.CreateJobError("No field can be left empty"))
@@ -95,7 +98,7 @@ class CreateJobViewModel @Inject constructor(
             _jobEventFlow.emit(CreateJobEvent.CreateJobLoading)
 
             val jobPostToSend = JobPost(
-                UUID.randomUUID().toString(),
+                jobID ?: UUID.randomUUID().toString(),
                 jobCreator,
                 jobType,
                 jobRemote,
@@ -106,8 +109,8 @@ class CreateJobViewModel @Inject constructor(
                 jobDesc,
                 jobReq,
                 jobBenefits,
-                0,
-                "",
+                jobTimestamp ?: 0,
+                jobImageUrl ?: "",
                 false
             )
 
@@ -128,7 +131,7 @@ class CreateJobViewModel @Inject constructor(
             when(val result = repository.createJobPost(jobLogoFile, jobPostRequest)) {
                 is Resource.Success -> {
                     _jobEventFlow.emit(
-                        CreateJobEvent.CreateJobSuccess(result.data ?: "Job added successfully")
+                        CreateJobEvent.CreateJobSuccess(jobPostToSend)
                     )
                 }
                 is Resource.Error -> {

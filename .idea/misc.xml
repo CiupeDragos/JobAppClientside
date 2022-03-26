@@ -5,37 +5,30 @@
       <map>
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/credentials_background.xml" value="0.25" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/filter_item_view_background.xml" value="0.2975" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_filters.xml" value="0.298" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2975" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_logout.xml" value="0.298" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_profile.xml" value="0.298" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_profile_icon.xml" value="0.21" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_remove.xml" value="0.2975" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_search_bar_icon.xml" value="0.2975" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/ic_see_job_applications.xml" value="0.298" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/drawable/search_bar.xml" value="0.2975" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/filter_item_view.xml" value="0.5" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_create_job.xml" value="0.36770833333333336" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_details.xml" value="0.33" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_favourites.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_filters.xml" value="0.25" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_individual_job.xml" value="0.33" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_posted_jobs.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_register.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/fragment_search.xml" value="0.33" />
+        <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/layout/job_post_item_view.xml" value="0.36770833333333336" />
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/JobAppClientside/app/src/main/res/menu/bottom_nav_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_account_details.xml" value="0.123" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_create_job_post.xml" value="0.123" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_delete_save_job.xml" value="0.1225" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_profile_darker.xml" value="0.123" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_remove.xml" value="0.1225" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_see_job_applications.xml" value="0.123" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_see_job_posts.xml" value="0.123" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_selected_favourite.xml" value="0.1225" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_slected_favourite.xml" value="0.1225" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/ic_unslected_favourite.xml" value="0.1225" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/drawable/job_post_background.xml" value="0.1225" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/layout/activity_main.xml" value="0.23854166666666668" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/layout/filter_item_view.xml" value="0.4" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/layout/fragment_create_job.xml" value="0.264" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/layout/fragment_favourites.xml" value="0.18703703703703703" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/layout/fragment_search.xml" value="0.264" />
-        <entry key="..\:/git/JobAppClientside/app/src/main/res/layout/job_post_item_view.xml" value="0.264" />
       </map>
     </option>
   </component>
